@@ -39,12 +39,13 @@ def create_colored_image(h, s, v, file_format="png", BG=(255, 255, 255)):
     img.save(os.path.join(OUTPUT_DIR, filename), quality=95, optimize=True)
 
 # --- Generate images ---
-for b in BACKGROUND:
-    for h in range(171, 360, HUE_STEP):
-        for s in np.arange(0, 1.01, SAT_STEP):
-            OUTPUT_DIR = f"HSV/{int(b[0]):03}/{int(h):03}/{int(s*100):03}/"
-            os.makedirs(OUTPUT_DIR, exist_ok=True)
-            for v in np.arange(0, 1.01, VAL_STEP):
-                create_colored_image(h, s, v, file_format="png",BG=b)
+# for b in BACKGROUND:
+b=BACKGROUND[4]
+for s in np.arange(0, 1.01, SAT_STEP):
+    for v in np.arange(0, 1.01, VAL_STEP):
+        OUTPUT_DIR = f"SVH/{int(b[0]):03}/{int(s*100):03}/{int(v*100):03}/"
+        os.makedirs(OUTPUT_DIR, exist_ok=True)
+        for h in range(0, 360, HUE_STEP):            
+            create_colored_image(h, s, v, file_format="png",BG=b)
 
 print(f"Images saved in: {OUTPUT_DIR}")
